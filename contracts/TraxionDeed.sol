@@ -15,7 +15,7 @@ contract TraxionDeed is ERC721Token, Pausable {
 
     string public constant name_ = "Traxion Deed of Sale";
     string public constant symbol_ = "TXND";
-    uint256 public constant rate = 3125E11;
+    uint256 public constant rate = 1000;
     uint256 public weiRaised;
     uint256 public IOUTokens;
 
@@ -67,13 +67,13 @@ contract TraxionDeed is ERC721Token, Pausable {
 
     /*** @dev function to create Deed of Sale ***/
 
-    function buyTokens(address beneficiary, uint256 ethAmt) public onlyOwner whenNotPaused {
+    function buyTokens(address beneficiary, uint256 weiAmt) public onlyOwner whenNotPaused {
         require(beneficiary != address(0));
-        require(ethAmt != 0);
+        require(weiAmt != 0);
 
-        uint256 _tokenamount = ethAmt.mul(rate);
+        uint256 _tokenamount = weiAmt.mul(rate);
 
-        mint(beneficiary, _tokenamount, ethAmt);
+        mint(beneficiary, _tokenamount, weiAmt);
     }
 
     /*** @dev function to burn the deed and swap it to Traxion Tokens ***/
