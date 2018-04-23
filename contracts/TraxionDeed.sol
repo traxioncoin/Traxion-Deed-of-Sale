@@ -23,7 +23,7 @@ contract TraxionDeed is ERC721Token, Pausable {
         Purpose of this is to prevent unecessary burning of deed of sale during pre-ICO stage.
     ***/
 
-    event main_ico();
+    event mainICO();
     
     bool public main_sale = false;
 
@@ -48,7 +48,7 @@ contract TraxionDeed is ERC721Token, Pausable {
    */
     function Main_ICO() public onlyOwner isPreICO {
         main_sale = true;
-        emit main_ico();
+        emit mainICO();
     }
 
     /*** @dev Traxion Deed of Sale Metadata ***/
@@ -83,18 +83,17 @@ contract TraxionDeed is ERC721Token, Pausable {
     }
 
     function mint(address _to, uint256 value, uint256 weiAmt) internal returns (uint256 _tokenId) {
-     
-        Token memory token = Token({
-            mintedFor: _to,
-            mintedAt: uint64(now),
-            TokenAmount: value,
-            weiAmount: weiAmt
-        });
 
         weiRaised = weiRaised.add(weiAmt);
         IOUTokens = IOUTokens.add(value);
 
-        _tokenId = tokens.push(token) - 1;
+        _tokenId = tokens.push(Token({
+                        mintedFor: _to,
+                        mintedAt: uint64(now),
+                        TokenAmount: value,
+                        weiAmount: weiAmt
+                    })) - 1;
+                    
         super._mint(_to, _tokenId);
     }
 
