@@ -61,10 +61,6 @@ contract TraxionDeed is ERC721Token, Pausable {
 
     Token[] public tokens;
 
-    mapping (uint256 => address) public tokenIndexToOwner;
-    mapping (address => uint256) ownershipTokenCount;
-    mapping (uint256 => address) public tokenIndexToApproved;
-
     /*** @dev function to create Deed of Sale ***/
 
     function buyTokens(address beneficiary, uint256 weiAmt) public onlyOwner whenNotPaused {
