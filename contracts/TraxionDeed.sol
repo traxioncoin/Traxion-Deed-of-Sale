@@ -13,11 +13,13 @@ contract TraxionDeed is ERC721Token, Pausable {
 
     using SafeMath for uint256;
 
-    string public constant _name = "Traxion Deed of Sale";
-    string public constant _symbol = "TXND";
     uint256 public constant rate = 1000;
     uint256 public weiRaised;
     uint256 public iouTokens;
+
+    constructor(string name, string symbol) public
+    ERC721Token(name, symbol)
+    { }
 
     /** @dev Modified Pausable.sol from https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/lifecycle/Pausable.sol 
         Purpose of this is to prevent unecessary burning of deed of sale during pre-ICO stage.
