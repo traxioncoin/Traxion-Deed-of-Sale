@@ -13,17 +13,17 @@ contract TraxionDeed is ERC721Token, Pausable {
 
     using SafeMath for uint256;
 
-    string public constant name_ = "Traxion Deed of Sale";
-    string public constant symbol_ = "TXND";
+    string public constant _name = "Traxion Deed of Sale";
+    string public constant _symbol = "TXND";
     uint256 public constant rate = 1000;
     uint256 public weiRaised;
-    uint256 public IOUTokens;
+    uint256 public iouTokens;
 
     /** @dev Modified Pausable.sol from https://github.com/OpenZeppelin/zeppelin-solidity/blob/master/contracts/lifecycle/Pausable.sol 
         Purpose of this is to prevent unecessary burning of deed of sale during pre-ICO stage.
     ***/
 
-    event mainICO();
+    event MainICO();
     
     bool public main_sale = false;
 
@@ -46,16 +46,16 @@ contract TraxionDeed is ERC721Token, Pausable {
    /**
    * @dev called by the owner to initialize Main-ICO
    */
-    function Main_ICO() public onlyOwner isPreICO {
+    function mainICO() public onlyOwner isPreICO {
         main_sale = true;
-        emit mainICO();
+        emit MainICO();
     }
 
     /*** @dev Traxion Deed of Sale Metadata ***/
     struct Token {
         address mintedFor;
         uint64 mintedAt;
-        uint256 TokenAmount;
+        uint256 tokenAmount;
         uint256 weiAmount;
     }
 
@@ -81,12 +81,12 @@ contract TraxionDeed is ERC721Token, Pausable {
     function mint(address _to, uint256 value, uint256 weiAmt) internal returns (uint256 _tokenId) {
 
         weiRaised = weiRaised.add(weiAmt);
-        IOUTokens = IOUTokens.add(value);
+        iouTokens = iouTokens.add(value);
 
         _tokenId = tokens.push(Token({
                         mintedFor: _to,
                         mintedAt: uint64(now),
-                        TokenAmount: value,
+                        tokenAmount: value,
                         weiAmount: weiAmt
                     })) - 1;
                     
